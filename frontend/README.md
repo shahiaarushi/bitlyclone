@@ -1,36 +1,158 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# URL Shortener Frontend
 
-## Getting Started
+A modern, responsive React TypeScript frontend for the URL shortener service. Built with Vite, Tailwind CSS, and TypeScript.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- 🚀 **Lightning Fast**: Create short URLs instantly
+- 📊 **Analytics**: Track click counts for your shortened URLs
+- 🔒 **Secure**: Built with modern security practices
+- 📱 **Responsive**: Works perfectly on desktop and mobile
+- 💾 **Persistent**: URLs are saved in localStorage
+- ✂️ **Copy to Clipboard**: One-click copying of shortened URLs
+- ✏️ **Edit URLs**: Update original URLs after creation
+- 🗑️ **Delete URLs**: Remove unwanted shortened URLs
+- 🎨 **Modern UI**: Beautiful gradient design with smooth animations
+
+## Prerequisites
+
+- Node.js (version 16 or higher)
+- npm or yarn
+- Backend server running on port 3000
+
+## Installation
+
+1. Navigate to the frontend directory:
+
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+## Backend Setup
+
+Make sure your backend server is running on port 3000. The frontend expects the backend to be available at:
+
+```
+http://localhost:3000/api/state
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## API Endpoints Used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `POST /api/state/create` - Create a new short URL
+- `GET /api/state/:shortUrl` - Redirect to original URL
+- `PUT /api/state/update/:shortUrl` - Update original URL
+- `DELETE /api/state/delete/:shortUrl` - Delete short URL
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Features in Detail
 
-## Learn More
+### URL Shortening
 
-To learn more about Next.js, take a look at the following resources:
+- Enter any valid URL (must include http:// or https://)
+- Click "Shorten" or press Enter
+- Get a shortened URL instantly
+- Copy the shortened URL with one click
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### URL Management
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Edit**: Click the edit icon to modify the original URL
+- **Delete**: Click the delete icon to remove a URL
+- **Copy**: Click the "Copy" button to copy the shortened URL
+- **Clear All**: Remove all URLs at once
 
-## Deploy on Vercel
+### Data Persistence
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- URLs are automatically saved to localStorage
+- Data persists across browser sessions
+- No server-side storage required for basic functionality
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Error Handling
+
+- Validates URLs before submission
+- Shows clear error messages for network issues
+- Graceful handling of backend unavailability
+
+## Development
+
+### Project Structure
+
+```
+src/
+├── App.tsx          # Main application component
+├── main.tsx         # Application entry point
+├── index.css        # Global styles and Tailwind imports
+└── assets/          # Static assets
+```
+
+### Technologies Used
+
+- **React 18** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Tailwind CSS** - Utility-first CSS framework
+- **Local Storage** - Client-side data persistence
+
+### Customization
+
+#### Changing the Backend URL
+
+Update the `API_BASE_URL` constant in `src/App.tsx`:
+
+```typescript
+const API_BASE_URL = "http://your-backend-url:port/api/state";
+```
+
+#### Styling
+
+The application uses Tailwind CSS. You can customize the design by modifying the classes in the components.
+
+## Build for Production
+
+1. Create a production build:
+
+   ```bash
+   npm run build
+   ```
+
+2. Preview the production build:
+   ```bash
+   npm run preview
+   ```
+
+## Troubleshooting
+
+### Backend Connection Issues
+
+- Ensure the backend server is running on port 3000
+- Check that CORS is properly configured on the backend
+- Verify the API endpoints are accessible
+
+### Build Issues
+
+- Clear node_modules and reinstall: `rm -rf node_modules && npm install`
+- Update dependencies: `npm update`
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is open source and available under the MIT License.

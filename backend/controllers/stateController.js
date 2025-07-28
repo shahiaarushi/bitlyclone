@@ -15,7 +15,9 @@ const urlShortener = async (req, res) => {
       userId,
     });
     await url.save();
-    res.status(201).json({ shortUrl });
+    res
+      .status(201)
+      .json({ url: `http://localhost:3000/api/state/${shortUrl}` });
   } catch (error) {
     console.error("Error creating short URL:", error);
     res.status(500).json({ error: error.message });
@@ -34,7 +36,7 @@ const redirectUrl = async (req, res) => {
     }
     url.clickCount++;
     await url.save();
-    res.status(301).redirect(url.originalUrl);
+    res.redirect(url.originalUrl);
   } catch (error) {
     console.error("Error redirecting to original URL:", error);
     res.status(500).json({ error: error.message });
@@ -48,27 +50,26 @@ const updateUrl = async (req, res) => {
   const { shortUrl } = req.params;
   const { originalUrl } = req.body;
   try {
-        const url = await stateModal.findOne({
-            shortUrl
-        });
-        if (!url) {
-            return res.status(404).json({
-                error: "URL not found"
-            });
-        }
-        url.originalUrl = originalUrl;
-        await url.save();
-        res.status(200).json({
-            message: "URL updated successfully"
-        });
+    const url = await stateModal.findOne({
+      shortUrl,
+    });
+    if (!url) {
+      return res.status(404).json({
+        error: "URL not found",
+      });
     }
-    catch (error) {
-        console.error("Error updating URL:", error);
-        res.status(500).json({
-            error: error.message
-        });
-    }
-}
+    url.originalUrl = originalUrl;
+    await url.save();
+    res.status(200).json({
+      message: "URL updated successfully",
+    });
+  } catch (error) {
+    console.error("Error updating URL:", error);
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
 
 // @route   DELETE /api/state/delete/:uri
 // @desc    Delete the short URL
